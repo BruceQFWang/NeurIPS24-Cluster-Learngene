@@ -462,11 +462,8 @@ class SharedAttention(Attention):
         #self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias) # [2304,768]
         #self.qkv.weight = expanded_shared_heads
         self.qkv = expanded_shared_heads
-        # num_heads // len(shared_head_index) 不能整除怎么办？可以先扩展成上取证的倍数，然后再把多余的裁剪掉。 done
-        # 看下shared_heads.repeat是不是简单的共享复制还是只是参数初始化，参数规模未压缩，最好是两个版本都实现。  
-        # 都扩展成12个head。
 
-    def forward(self, x):  ## TODO 处理下这里的维度
+    def forward(self, x): 
         B, N, C = x.shape
         #qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
         qkv = torch.matmul(x, self.qkv.T)  
@@ -505,14 +502,7 @@ class SABlock(nn.Module):
         self.norm2 = pretrained_block.norm2#PruneNorm(pretrained_block.norm2, width_ratio)
 
         self.mlp = pretrained_block.mlp if inherited_mlp==None else inherited_mlp #PrunedMlp(pretrained_block.mlp, width_ratio)
-        #print(self.mlp)
-        #print(self.attn)
-        #exit()
-        # 1. 裁剪MLP 改成class prune_mlp done  
-        # 2. 裁剪attn head最终数量还有proj weight_assignment done
-        # 3. 裁剪norm1和norm2 done 
-        # 4. 对patch_embed出来的x、cls token和pos_encoding都使用pool done
-        # 5. 改下 裁剪attn head最终数量还有proj weight_clone
+
 
     def forward(self, x, return_attention=False):
         y, attn = self.attn(self.norm1(x))
