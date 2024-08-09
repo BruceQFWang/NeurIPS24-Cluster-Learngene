@@ -1,14 +1,14 @@
-# Clustered-Learngene
+# Cluster-Learngene
 
-## 计算mean attention distance
+## compute mean attention distance
 ### deit_base
-python -m torch.distributed.launch --nproc_per_node=5 --master_port=31385 --use_env train_individual_imagenet1k_multidistill.py --model deit_base --compute_mean_attn_dist --weightinherit weight_assignment --data-path /home/user/datasets/ImageNet2012/Data/CLS-LOC --batchSize 20 --epochs 100 --max_update_distill 100 --warmup-epochs 5 --finetune ./checkpoint/deit_base_depth6_attn_patch+cls/base_depth_6.pth --output_dir ./checkpoint/deit_finetuning/ImageNet/base_depth6_weightassign_final_base_depth12/  --pin-mem
+python -m torch.distributed.launch --nproc_per_node=5 --master_port=31385 --use_env train.py --model deit_base --compute_mean_attn_dist --weightinherit weight_assignment --data-path /home/user/datasets/ImageNet2012/Data/CLS-LOC --batchSize 20 --epochs 100 --max_update_distill 100 --warmup-epochs 5 --finetune ./checkpoint/deit_base_depth6_attn_patch+cls/base_depth_6.pth --output_dir ./checkpoint/deit_finetuning/ImageNet/base_depth6_weightassign_final_base_depth12/  --pin-mem
 
 ### deit_small
-python -m torch.distributed.launch --nproc_per_node=5 --master_port=31385 --use_env train_individual_imagenet1k_multidistill.py --model deit_small --compute_mean_attn_dist --weightinherit weight_assignment --data-path /home/user/datasets/ImageNet2012/Data/CLS-LOC --batchSize 20 --epochs 100 --max_update_distill 100 --warmup-epochs 5 --finetune ./checkpoint/deit_base_depth6_attn_patch+cls/base_depth_6.pth --output_dir ./checkpoint/deit_finetuning/ImageNet/base_depth6_weightassign_final_base_depth12/  --pin-mem
+python -m torch.distributed.launch --nproc_per_node=5 --master_port=31385 --use_env train.py --model deit_small --compute_mean_attn_dist --weightinherit weight_assignment --data-path /home/user/datasets/ImageNet2012/Data/CLS-LOC --batchSize 20 --epochs 100 --max_update_distill 100 --warmup-epochs 5 --finetune ./checkpoint/deit_base_depth6_attn_patch+cls/base_depth_6.pth --output_dir ./checkpoint/deit_finetuning/ImageNet/base_depth6_weightassign_final_base_depth12/  --pin-mem
 
 ### deit_tiny 
-python -m torch.distributed.launch --nproc_per_node=5 --master_port=31385 --use_env train_individual_imagenet1k_multidistill.py --model deit_tiny --compute_mean_attn_dist --weightinherit weight_assignment --data-path /home/user/datasets/ImageNet2012/Data/CLS-LOC --batchSize 20 --epochs 100 --max_update_distill 100 --warmup-epochs 5   --pin-mem
+python -m torch.distributed.launch --nproc_per_node=5 --master_port=31385 --use_env train.py --model deit_tiny --compute_mean_attn_dist --weightinherit weight_assignment --data-path /home/user/datasets/ImageNet2012/Data/CLS-LOC --batchSize 20 --epochs 100 --max_update_distill 100 --warmup-epochs 5   --pin-mem
 
 ## ImageNet上结果 继承FFN
 
