@@ -69,13 +69,14 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python -m torch.distributed.launch --nproc_per_node
 ```
 
 ## Initializing descendant models on downstream tasks
+The data processing for downstream tasks is located in the file within the ./utils/dataset.py.
 
-### iNat-2019, deit_small
+### e.g., iNat-2019, deit_small
 ```
 python -m torch.distributed.launch --nproc_per_node=1 --master_port=43325 --use_env train.py --model deit_small --des_model savit_small --expand_method weight_assignment --self_distillation_adaptation stitch --data-set INAT19 --data-path /home/user/datasets/iNat19 --batchSize 320 --epochs 500 --warmup-epochs 10 --finetune ./checkpoint/ --output_dir  ./checkpoint/small_finetuning/inat/ --pin-mem
 ```
 
-### iNat-2019, deit_tiny
+### e.g., iNat-2019, deit_tiny
 ```
 python -m torch.distributed.launch --nproc_per_node=1 --master_port=43325 --use_env train.py --model deit_tiny --des_model savit_tiny --expand_method weight_assignment --self_distillation_adaptation stitch --data-set INAT19 --data-path /home/user/datasets/iNat19 --batchSize 320 --epochs 500 --warmup-epochs 10 --finetune ./checkpoint/ --output_dir  ./checkpoint/tiny_finetuning/inat/ --pin-mem
 ```
